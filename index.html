@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+  <meta charset="utf-8">
+  <title>AJAX</title>
+  <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+  <link href="https://fonts.googleapis.com/css?family=Asap|Merriweather+Sans|Nunito+Sans|Rubik" rel="stylesheet">
+
+</head>
+
+<body>
+
+<div id="btn-container"></div>
+
+<div id="form-container">
+
+<label for="country-input">Add country here:</label>
+<input id="country-input"></input>
+<button id="add-country">Add</button>
+
+</div>
+
+<div id="gif-dump"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript">
+
+// topics variable containing different items in an array
+var topics = ["United States", "France", "Sweden", "Italy", "Germany", "Ireland", "England"];
+
+// function to create buttons using a for loop going through the array above
+function createBtns() {
+  $("#btn-container").empty();
+  console.log(topics);
+  for (var i = 0; i < topics.length; i++) {
+      var btn = $("<button>");
+        btn.addClass("state");
+        btn.attr("data-name", topics[i]);
+        btn.text(topics[i]);
+        $("#btn-container").append(btn);
+  };
+};
+
+// calling the function above to create the buttons
+createBtns();
+// on click of a button function that will run everything inside it, including calling the API
+$(".state").on("click", function() {
+
+  console.log("in-state");
+  $("#gif-dump").empty();
+  var topic = $(this).attr("data-name");
+  var apiKey = "Jlnuyj2qeF35yOEVdvqyo01BDLWA6rPe";
+  var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + topic + "&apikey=" + apiKey + "&limit=10";
+
+  // ajax call
+  $.ajax({
+    url: queryURL,
+    method: "GET"
+  }).then(function(response) {
+    console.log(response.data);
+  //
+
+    // ajax call response stored in a variable named results
+    var results = response.data;
+
+    // for loop to loop through the results
+    for (var i = 0; i < results.length; i++) {
+
+      var gifDiv = $("<div id='gif" + i + "'>");
+      var rating = results[i].rating;
+      var p = $("<p class='rfont'>").text("Rating: " + rating);
+      var gifImg = $("<img>");
+      var still = results[i].images.fixed_height_still.url;
+      var animate = results[i].images.fixed_height.url;
+
+      gifImg.attr("src", still);
+      gifImg.attr("class", "gif");
+
+      gifDiv.append(p);
+      gifDiv.prepend(gifImg);
+
+      $("#gif-dump").append(gifDiv);
+    }
+
+    // start and stop function
+    $("body").on("click", ".gif", function() {
+      var src = $(this).attr("src");
+      if ($(this).hasClass("playing")) {
+        //stop
+        $(this).attr("src", src.replace(/\.gif/i, "_s.gif"))
+        $(this).removeClass("playing");
+      } else {
+        //play
+        $(this).addClass("playing");
+        $(this).attr("src", src.replace(/\_s.gif/i, ".gif"))
+      }
+
+    });
+
+    });
+
+  });
+
+  // declare the basic form elements into variables
+// var form = $("<form>");
+// form.attr("onsubmit", validateForm);
+// var textInput = $("<input>");
+// var label = $("<label>");
+// var btnInput = $("<button>");
+// // append the form into the form-container div
+//   $("#form-container").append(form);
+//   // create the label and append to the form
+//   label.attr("for", "country-input");
+//   label.text("Add a country:");
+//   form.prepend(label);
+//   // create the input and append to the form
+//   textInput.attr("type", "text");
+//   textInput.attr("id", "country-input");
+//   form.append(textInput);
+//   // create the input button to add a new country to the btn-container on click
+//   // btnInput.attr("type", "submit");
+//   btnInput.attr("id", "add-country");
+//   form.append(btnInput);
+
+  // on click adds the value of the textbox to the end of the array and recreates the buttons with the new button
+$("#add-country").on("click", function() {
+
+  var value = $("#country-input").val().trim();
+    console.log(value);
+    topics.push(value);
+    createBtns();
+  });
+
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,55 @@
+body {
+    background-color: #dbd4b1;
+    font-family: 'Merriweather', sans-serif;
+}
+
+label {
+    display: block;
+    font-family: 'Merriweather', sans-serif;
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+#add-country {
+    display: block;
+    font-weight: bold;
+    margin-top: 5px;
+    padding: 5px;
+    width: 100px;
+}
+
+#btn-container {
+    padding: 10px 10px 20px 10px;
+}
+
+#country-input {
+    height: 30px;
+    width: 200px;
+}
+
+#form-container {
+    float: right;
+    margin-right: 300px;
+}
+
+#gif-dump {
+    padding-left: 10px;
+}
+
+.rfont {
+    font-family: 'Merriweather', sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.state {
+    background-color: rgb(88, 88, 240);
+    border: none;
+    border-radius: 15px;
+    color: #fff;
+    font-family: 'Rubik', sans-serif;
+    font-size: 20px;
+    margin: 0 5px;
+    padding: 10px;
+}
