@@ -5,6 +5,8 @@
   <title>AJAX assignment</title>
   <link rel="stylesheet" type="text/css" href="assets/css/style.css">
   <link href="https://fonts.googleapis.com/css?family=Asap|Merriweather+Sans|Nunito+Sans|Rubik" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Barlow&display=swap" rel="stylesheet">
+
 
 </head>
 
@@ -14,19 +16,19 @@
 
 <div id="form-container">
 
-<label for="country-input">Add country here:</label>
-<input id="country-input"></input>
-<button id="add-country">Add</button>
+<input id="button-input" placeholder="Add new button to search"></input>
+<button id="add-button">Create</button>
 
 </div>
 
+<div id="instructions">Click a button to search and then click a gif to play!</div>
 <div id="gif-dump"></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script type="text/javascript">
 
 // topics variable containing different items in an array
-var topics = ["United States", "France", "Sweden", "Italy", "Germany", "Ireland", "England"];
+var topics = ["Funny", "Spooky", "Cute", "Sporty", "Goofy", "Nerdy", "Sad"];
 
 // function to create buttons using a for loop going through the array above
 function createBtns() {
@@ -37,7 +39,7 @@ function createBtns() {
         btn.addClass("state");
         btn.attr("data-name", topics[i]);
         btn.text(topics[i]);
-        btn.on("click", findGif)
+        btn.on("click", findGif);
         $("#btn-container").append(btn);
   };
 };
@@ -49,7 +51,7 @@ function findGif() {
   $("#gif-dump").empty();
   var topic = $(this).attr("data-name");
   var apiKey = "Jlnuyj2qeF35yOEVdvqyo01BDLWA6rPe";
-  var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + topic + "&apikey=" + apiKey + "&limit=10";
+  var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + topic + "&apikey=" + apiKey + "&limit=20";
 
   // ajax call
   $.ajax({
@@ -97,33 +99,11 @@ function clickGif(e) {
         $(this).attr("src", src.replace(/\_s.gif/i, ".gif"))
       }
 }
-  // });
-
-  // declare the basic form elements into variables
-  // var form = $("<form>");
-  // form.attr("onsubmit", validateForm);
-  // var textInput = $("<input>");
-  // var label = $("<label>");
-  // var btnInput = $("<button>");
-  // // append the form into the form-container div
-  //   $("#form-container").append(form);
-  //   // create the label and append to the form
-  //   label.attr("for", "country-input");
-  //   label.text("Add a country:");
-  //   form.prepend(label);
-  //   // create the input and append to the form
-  //   textInput.attr("type", "text");
-  //   textInput.attr("id", "country-input");
-  //   form.append(textInput);
-  //   // create the input button to add a new country to the btn-container on click
-  //   // btnInput.attr("type", "submit");
-  //   btnInput.attr("id", "add-country");
-  //   form.append(btnInput);
 
   // on click adds the value of the textbox to the end of the array and recreates the buttons with the new button
-$("#add-country").on("click", function() {
+$("#add-button").on("click", function() {
 
-  var value = $("#country-input").val().trim();
+  var value = $("#button-input").val().trim();
     topics.push(value);
     var btn = $("<button>");
     btn.addClass("state");
